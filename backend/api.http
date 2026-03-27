@@ -1,0 +1,70 @@
+### AUTH: register
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "ivan@mail.ru",
+  "first_name": "Иван",
+  "last_name": "Иванов",
+  "password": "qwerty123"
+}
+
+### AUTH: login (получить JWT)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ivan@mail.ru",
+  "password": "qwerty123"
+}
+
+### AUTH: me (подставьте токен)
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer {{token}}
+
+### PRODUCTS: list (не защищён)
+GET http://localhost:3000/api/products
+
+### PRODUCTS: get by id (защищён)
+GET http://localhost:3000/api/products/p1
+Authorization: Bearer {{token}}
+
+### PRODUCTS: create (не защищён)
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "title": "Новый товар",
+  "category": "Категория",
+  "description": "Описание",
+  "price": 100,
+  "stock": 5
+}
+
+### PRODUCTS: update by id (PUT, защищён)
+PUT http://localhost:3000/api/products/p1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Печенье (обновлено)",
+  "price": 129
+}
+
+### PRODUCTS: delete by id (защищён)
+DELETE http://localhost:3000/api/products/p1
+Authorization: Bearer {{token}}
+
+
+### AUTH: refresh (обновить пару токенов)
+# Вариант A: refreshToken в заголовке x-refresh-token
+POST http://localhost:3000/api/auth/refresh
+x-refresh-token: {{refreshToken}}
+
+### AUTH: refresh (вариант B: refreshToken в body)
+POST http://localhost:3000/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
